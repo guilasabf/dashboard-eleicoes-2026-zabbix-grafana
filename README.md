@@ -100,6 +100,7 @@ operação na noite da apuração. Parabéns, desde já, a quem topar assumir.
 - **Compartilhe** o painel no dia da apuração.
 - **Me pague um café** pelo Pix: chave aleatória `e00b0081-8420-4004-9522-13a0e493c5e6` (o QR Code está na página
   "Sobre" do painel).
+  Se cada visitante mandar 10 centavos, eu quito minhas dívidas no Serasa kkkk
 
 ## Avisos
 
