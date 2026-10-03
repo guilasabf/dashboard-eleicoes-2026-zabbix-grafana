@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Eleições 2026 — apuração em tempo real com Zabbix e Grafana</title>
+<meta name="description" content="Acompanhe a apuração das Eleições 2026 em tempo real: Presidente, Governador e Senador, Brasil e estados, com dados oficiais do TSE em um painel Zabbix + Grafana.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dashboard Eleições 2026 — apuração em tempo real">
+<meta property="og:description" content="Presidente, Governador e Senador, Brasil e estados, com dados oficiais do TSE. Painel Zabbix + Grafana, em memória de Magno Montecerqueira.">
+<meta property="og:image" content="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/img/simulacao-apuracao-100.jpg">
+<meta property="og:url" content="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/">
+<style>
+  :root { --bg:#0b0f1a; --cartao:#121a30; --borda:rgba(120,140,255,.22); --fg:#e6e9f5; --muted:#9aa3bd;
+          --ouro:#ffe066; --accent:#6ea8ff; --verde:#73bf69; }
+  * { box-sizing: border-box; }
+  body { margin:0; color:var(--fg); font:17px/1.6 "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+         background: radial-gradient(60% 40% at 15% 0%, rgba(255,80,20,.16), transparent 70%),
+                     radial-gradient(60% 40% at 85% 0%, rgba(40,170,255,.16), transparent 70%), var(--bg); }
+  main { max-width: 880px; margin: 0 auto; padding: 36px 18px 60px; text-align: center; }
+  .selo { font: 800 .78rem "Courier New", ui-monospace, monospace; letter-spacing: 3px; text-transform: uppercase; color: var(--ouro); }
+  h1 { font-size: clamp(1.7rem, 5vw, 2.6rem); line-height: 1.15; margin: 10px 0 12px; }
+  p.sub { color: var(--muted); max-width: 640px; margin: 0 auto 26px; }
+  a { color: var(--accent); }
+  .botao { display:inline-block; padding: 16px 30px; border-radius: 12px; font-weight: 800; font-size: 1.15rem;
+           text-decoration:none; color:#1a1200; background: linear-gradient(180deg, #ffd23f, #ff9a1a);
+           box-shadow: 0 8px 26px rgba(255,150,30,.28); }
+  .botao:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .botao[aria-disabled="true"] { background:#3a4058; color:#c8cde0; box-shadow:none; pointer-events:none; }
+  #estado { margin-top: 12px; color: var(--muted); font-size: .92rem; min-height: 1.5em; }
+  .tela { margin: 34px auto 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--borda); }
+  .tela img { display:block; width:100%; height:auto; }
+  .legenda { font-size: .82rem; color: var(--muted); margin-top: 8px; }
+  .cartoes { display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 34px; text-align:left; }
+  .cartao { background: linear-gradient(180deg, var(--cartao), #0b1122); border:1px solid var(--borda); border-radius: 14px; padding: 16px 18px; }
+  .cartao b { display:block; margin-bottom: 4px; }
+  .cartao span { color: var(--muted); font-size: .93rem; }
+  footer { margin-top: 36px; color: var(--muted); font-size: .88rem; }
+</style>
+</head>
+<body>
+<main>
+  <div class="selo">Eleições 2026 · apuração em tempo real</div>
+  <h1>Dashboard Eleições 2026<br>com Zabbix e Grafana</h1>
+  <p class="sub">Presidente, Governador e Senador, Brasil e estados, com os dados oficiais do TSE atualizados a cada
+    minuto. Gratuito, sem cadastro e sem anúncios.</p>
+
+  <a class="botao" id="abrir" href="#" aria-disabled="true">Carregando o endereço…</a>
+  <div id="estado" role="status"></div>
+
+  <div class="tela"><img src="img/simulacao-apuracao-100.jpg" alt="Painel de apuração com Player 1 e Player 2, indicadores e evolução dos votos" width="800" height="955"></div>
+  <div class="legenda">Tela de um ensaio com candidatos fictícios. No dia, o painel mostra os resultados oficiais.</div>
+
+  <div class="cartoes">
+    <div class="cartao"><b>Em memória de Magno Montecerqueira</b><span>Criador do painel de 2022 para a comunidade Zabbix Brasil. A ideia é dele.</span></div>
+    <div class="cartao"><b>Como foi feito</b><span><a href="https://github.com/guilasabf/dashboard-eleicoes-2026-zabbix-grafana">Arquitetura, segurança e testes no GitHub</a>. Deixe uma estrela se gostou.</span></div>
+    <div class="cartao"><b>Quem fez</b><span>Guilherme Ferreira, SRE. <a href="https://www.linkedin.com/in/guilherme-ferreira-aws-sre">LinkedIn</a> · <a href="https://github.com/guilasabf">GitHub</a></span></div>
+  </div>
+
+  <footer>Painel independente, sem vínculo com o TSE. Fonte dos dados: <a href="https://resultados.tse.jus.br">resultados.tse.jus.br</a>.</footer>
+</main>
+<script>
+(function () {
+  var botao = document.getElementById('abrir'), estado = document.getElementById('estado');
+  fetch('link.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d || !d.url) throw new Error('sem endereço');
+      botao.href = d.url;
+      botao.textContent = 'Abrir o painel ao vivo';
+      botao.removeAttribute('aria-disabled');
+      if (d.aviso) estado.textContent = d.aviso;
+    })
+    .catch(function () {
+      botao.textContent = 'Painel fora do ar no momento';
+      estado.textContent = 'O endereço muda quando o servidor reinicia. Volte em alguns minutos.';
+    });
+})();
+</script>
+</body>
+</html>
