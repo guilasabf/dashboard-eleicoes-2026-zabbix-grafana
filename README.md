@@ -9,9 +9,12 @@
 Painel público que acompanha a **apuração das Eleições 2026** (Presidente, Governador e Senador, Brasil e as 27 UFs)
 em tempo real, a partir dos dados abertos do TSE, com **Zabbix** na coleta e **Grafana** na visualização.
 
-> **Em memória de [Magno Montecerqueira](https://www.linkedin.com/in/magnomontecerqueira/)**, que criou o
-> [Dashboard Eleições 2022](https://grafana.com/grafana/dashboards/17309-zdashboard-elei-es-2022-br/) para a comunidade
-> Zabbix Brasil. Esta edição foi reescrita do zero para o leiaute de 2026 do TSE, mas a ideia é dele.
+> **Agradecimento ao idealizador, Sansão Simonton** (Telegram: [@sansaoipb](https://t.me/sansaoipb)), a quem devemos a ideia
+> do painel de apuração com Zabbix e Grafana para a comunidade Zabbix Brasil.
+>
+> **Em memória de [Magno Montecerqueira](https://www.linkedin.com/in/magnomontecerqueira/)**, que publicou o
+> [Dashboard Eleições 2022](https://grafana.com/grafana/dashboards/17309-zdashboard-elei-es-2022-br/). Esta edição foi
+> reescrita do zero para o leiaute de 2026 do TSE, mas a ideia é deles.
 
 **Acesse o painel:** https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/
 
