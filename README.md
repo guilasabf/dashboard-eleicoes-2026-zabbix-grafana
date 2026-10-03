@@ -13,7 +13,7 @@ em tempo real, a partir dos dados abertos do TSE, com **Zabbix** na coleta e **G
 > [Dashboard Eleições 2022](https://grafana.com/grafana/dashboards/17309-zdashboard-elei-es-2022-br/) para a comunidade
 > Zabbix Brasil. Esta edição foi reescrita do zero para o leiaute de 2026 do TSE, mas a ideia é dele.
 
-**▶ Acesse o painel:** https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/
+**Acesse o painel:** https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/
 
 **Endereço direto do painel ao vivo (temporário, muda se o servidor reiniciar):** https://distinction-overseas-near-abstracts.trycloudflare.com
 
@@ -84,17 +84,18 @@ guigobrito94@gmail.com
 
 ## Passo o bastão
 
-Em 2022 foi o Magno. Em 2026 fui eu. Nas próximas eleições (municipais de 2028 e gerais de 2030), quero ver outra
-pessoa da comunidade Zabbix e Grafana tocando este painel. Se você topa assumir, me chame: eu passo o projeto completo,
-a documentação e o que aprendi, e acompanho a primeira edição. A tradição é da comunidade.
+Em 2022 foi o Magno. Em 2026 tive a honra de continuar o trabalho dele, e a comunidade Zabbix e Grafana está de parabéns
+por ter mantido essa tradição viva. Nas próximas eleições (municipais de 2028 e gerais de 2030), quem quiser tocar o
+painel pode contar comigo: me coloco à disposição para ajudar no que precisar, da arquitetura aos cuidados de
+operação na noite da apuração. Parabéns, desde já, a quem topar assumir.
 
 ## Como apoiar
 
-- ⭐ **Deixe uma estrela** neste repositório: é o que faz o projeto aparecer para mais gente.
-- 👤 **Siga [@guilasabf](https://github.com/guilasabf)** no GitHub e **conecte-se comigo no
+- Deixe uma **estrela** neste repositório: é o que faz o projeto aparecer para mais gente.
+- **Siga [@guilasabf](https://github.com/guilasabf) no GitHub** e **conecte-se comigo no
   [LinkedIn](https://www.linkedin.com/in/guilherme-ferreira-aws-sre)**.
-- 🔁 **Compartilhe** o painel no dia da apuração.
-- ☕ **Me paga um café** pelo Pix: chave aleatória `e00b0081-8420-4004-9522-13a0e493c5e6` (o QR Code está na página
+- **Compartilhe** o painel no dia da apuração.
+- **Me pague um café** pelo Pix: chave aleatória `e00b0081-8420-4004-9522-13a0e493c5e6` (o QR Code está na página
   "Sobre" do painel).
 
 ## Avisos
