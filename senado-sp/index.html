@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Apuração do Senado em São Paulo — Eleições 2026</title>
+<style>
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center;
+         background:#0b0f1a; color:#e6e9f5; font:17px/1.6 "Trebuchet MS", system-ui, sans-serif; padding:24px; }
+  a { color:#6ea8ff; }
+  .botao { display:inline-block; margin-top:14px; padding:14px 26px; border-radius:12px; font-weight:800; color:#1a1200;
+           text-decoration:none; background:linear-gradient(180deg,#ffd23f,#ff9a1a); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Apuração do Senado em São Paulo</h1>
+  <p id="msg">Abrindo o painel ao vivo…</p>
+  <a class="botao" id="abrir" href="../" hidden>Abrir o painel</a>
+</main>
+<script>
+// Endereço fixo para QR Code: lê o endereço atual do painel (link.json, mantido pelo servidor) e vai direto para o
+// Senado de SP. Assim o QR impresso continua valendo mesmo quando o túnel troca de endereço.
+(function () {
+  var msg = document.getElementById('msg'), botao = document.getElementById('abrir');
+  var caminho = '/d/presidente-brasil?from=now-6h&to=now&timezone=America%2FSao_Paulo&var-cargo=senador&var-uf=SP&refresh=1m';
+  fetch('../link.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d || !d.url) throw new Error('sem endereço');
+      var destino = d.url.replace(/\/$/, '') + caminho;
+      botao.href = destino; botao.hidden = false;
+      window.location.replace(destino);
+    })
+    .catch(function () {
+      msg.textContent = 'O painel está fora do ar no momento. Tente de novo em alguns minutos.';
+      botao.href = '../'; botao.textContent = 'Ver a página do projeto'; botao.hidden = false;
+    });
+})();
+</script>
+</body>
+</html>
