@@ -15,6 +15,10 @@ em tempo real, a partir dos dados abertos do TSE, com **Zabbix** na coleta e **G
 
 **▶ Acesse o painel:** https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/
 
+**Endereço direto do painel ao vivo (temporário, muda se o servidor reiniciar):** https://distinction-overseas-near-abstracts.trycloudflare.com
+
+O endereço fixo acima sempre leva ao painel atual.
+
 ![Simulação da apuração no painel: Player 1 x Player 2, indicadores e evolução](img/simulacao-apuracao-100.jpg)
 
 <sub>Tela de um ensaio com apuração sintética e candidatos fictícios do simulado do TSE. Não são resultados reais.</sub>
@@ -108,4 +112,4 @@ was hardened and load-tested before going public (about 1,300 concurrent viewers
 end-to-end checks, hourly backups and a rehearsed restore. Built in memory of Magno Montecerqueira, author of the
 2022 edition. This repository is a showcase; the full source is private.
 
-© 2026 Guilherme Ferreira. Todos os direitos reservados sobre textos, diagramas e imagens deste repositório.
+© 2026 Guilherme Ferreira. Textos, diagramas e imagens deste repositório sob a licença GPL v3 (arquivo LICENSE).
