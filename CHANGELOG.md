@@ -13,6 +13,9 @@ Itens identificados em 2026 e deixados para a próxima edição. Nenhum deles es
 - **Eleições municipais (2028):** Prefeito e Vereador.
 - **Endereço próprio e túnel nomeado**, para um link que não muda entre reinícios.
 - **Versão enxuta na galeria de dashboards do Grafana**, nos moldes do painel de 2022.
+- **Avaliar o plano gratuito do Grafana Cloud** (versão gerenciada) para hospedar o painel público na próxima
+  eleição, no lugar do notebook, ou como reserva. Pontos a verificar: limites do plano, acesso público sem login e
+  como conectar à coleta sem expor o Zabbix à internet.
 - **Pessoa da comunidade para tocar a próxima edição**, com o apoio de quem já fez esta.
 
 ## 2026 · edição das Eleições Gerais
