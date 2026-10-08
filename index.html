@@ -41,6 +41,11 @@
   .cartao { background: linear-gradient(180deg, var(--cartao), #0b1122); border:1px solid var(--borda); border-radius: 14px; padding: 16px 18px; }
   .cartao b { display:block; margin-bottom: 4px; }
   .cartao span { color: var(--muted); font-size: .93rem; }
+  .cartao.pix img { float: right; margin: 0 0 6px 12px; background: #fff; border-radius: 8px; padding: 4px; }
+  .cartao code { display: block; margin: 6px 0 8px; font: .78rem ui-monospace, Consolas, monospace; color: var(--fg); word-break: break-all; user-select: all; }
+  .cartao button { font: inherit; font-size: .88rem; font-weight: 700; color: var(--fg); background: transparent; border: 1px solid var(--borda); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+  .cartao button:hover { border-color: var(--accent); }
+  .cartao button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   footer { margin-top: 36px; color: var(--muted); font-size: .88rem; }
 </style>
 </head>
@@ -65,14 +70,26 @@
   <div class="cartoes">
     <div class="cartao"><b>Até o bairro</b><span>Nas 27 capitais, o voto por bairro e por local de votação, lido dos boletins de urna. Dá para procurar pelo CEP.</span></div>
     <div class="cartao"><b>Como foi feito</b><span><a href="https://github.com/guilasabf/dashboard-eleicoes-2026-zabbix-grafana">Arquitetura, segurança e testes no GitHub</a>. Deixe uma estrela se gostou.</span></div>
-    <div class="cartao"><b>Agradecimento ao idealizador</b><span>Sansão Simonton, a quem devemos a ideia do painel para a comunidade Zabbix Brasil. Telegram: <a href="https://t.me/sansaoipb">@sansaoipb</a>.</span></div>
-    <div class="cartao"><b>Quem fez</b><span>Guilherme Ferreira, SRE, pela <a href="https://observei.vercel.app">Observei</a>. <a href="https://www.linkedin.com/in/guilherme-ferreira-aws-sre">LinkedIn</a> · <a href="https://github.com/guilasabf">GitHub</a></span></div>
+    <div class="cartao"><b>Contato</b><span>Guilherme Ferreira, SRE, pela <a href="https://observei.vercel.app">Observei</a>, consultoria de TI.<br>
+      <a href="https://wa.me/5511994946744">WhatsApp (11) 99494-6744</a><br>
+      <a href="mailto:guigobrito@hotmail.com">guigobrito@hotmail.com</a><br>
+      <a href="https://www.linkedin.com/in/guilherme-ferreira-aws-sre">LinkedIn</a> · <a href="https://github.com/guilasabf">GitHub</a></span></div>
+    <div class="cartao pix"><b>Apoie com um Pix</b>
+      <img src="img/pix.svg" alt="QR Code do Pix" width="112" height="112" loading="lazy">
+      <span>O painel é independente e gratuito. Chave aleatória, em nome de Guilherme Ferreira:<code id="chave">e00b0081-8420-4004-9522-13a0e493c5e6</code>
+      <button type="button" id="copiar">Copiar chave</button></span></div>
   </div>
 
   <footer>Painel independente, sem vínculo com o TSE. Fonte dos dados: <a href="https://resultados.tse.jus.br">resultados.tse.jus.br</a>.</footer>
 </main>
 <script>
 (function () {
+  var copiar = document.getElementById('copiar');
+  copiar.addEventListener('click', function () {
+    var fim = function () { copiar.textContent = 'Chave copiada'; setTimeout(function () { copiar.textContent = 'Copiar chave'; }, 1800); };
+    var chave = document.getElementById('chave').textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(chave).then(fim, fim); else fim();
+  });
   var botao = document.getElementById('abrir'), estado = document.getElementById('estado');
   fetch('link.json?t=' + Date.now(), { cache: 'no-store' })
     .then(function (r) { return r.json(); })
