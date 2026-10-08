@@ -18,6 +18,17 @@ Itens identificados em 2026 e deixados para a próxima edição. Nenhum deles es
   como conectar à coleta sem expor o Zabbix à internet.
 - **Pessoa da comunidade para tocar a próxima edição**, com o apoio de quem já fez esta.
 
+## 2026 · 2º turno (25 de outubro)
+
+### Adicionado
+- Painel refeito para o 2º turno de Presidente: Brasil, região, estado, município e zona eleitoral; nas 27 capitais,
+  bairro e local de votação, somados dos boletins de urna.
+- Busca do bairro pelo CEP, comparação com o 2º turno de 2022 ("onde virou"), replay da noite, imagem para
+  compartilhar, tema claro e escuro, modo acessível, tela de celular e modo Arena.
+- O mesmo painel como página estática, exportada a cada 30 segundos, para aguentar mais acessos.
+- Vigilância do próprio ambiente no Zabbix (24 itens e 21 triggers) com alerta por e-mail.
+- Demonstração com o resultado do 1º turno, no ar até o início da apuração.
+
 ## 2026 · edição das Eleições Gerais
 
 Agradecimento ao idealizador, Sansão Simonton (Telegram: @sansaoipb). Em memória de Magno Montecerqueira.

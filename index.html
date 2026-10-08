@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dashboard Eleições 2026 — apuração em tempo real com Zabbix e Grafana</title>
-<meta name="description" content="Acompanhe a apuração das Eleições 2026 em tempo real: Presidente, Governador e Senador, Brasil e estados, com dados oficiais do TSE em um painel Zabbix + Grafana.">
+<meta name="description" content="Apuração das Eleições 2026 com os dados oficiais do TSE: Brasil, estado, cidade e, nas 27 capitais, bairro e local de votação. Projeto em Zabbix e Grafana, pronto para o 2º turno.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dashboard Eleições 2026 — apuração em tempo real">
-<meta property="og:description" content="Presidente, Governador e Senador, Brasil e estados, com dados oficiais do TSE. Painel Zabbix + Grafana, em memória de Magno Montecerqueira.">
-<meta property="og:image" content="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/img/simulacao-apuracao-100.jpg">
+<meta property="og:description" content="Dados oficiais do TSE, do Brasil até o bairro e o local de votação nas capitais. Projeto em Zabbix e Grafana, pronto para o 2º turno.">
+<meta property="og:image" content="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/img/compartilhar.jpg">
 <meta property="og:url" content="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/">
@@ -22,19 +22,19 @@
   main { max-width: 880px; margin: 0 auto; padding: 36px 18px 60px; text-align: center; }
   .selo { font: 800 .78rem "Courier New", ui-monospace, monospace; letter-spacing: 3px; text-transform: uppercase; color: var(--ouro); }
   h1 { font-size: clamp(1.7rem, 5vw, 2.6rem); line-height: 1.15; margin: 10px 0 12px; }
-  p.sub { color: var(--muted); max-width: 640px; margin: 0 auto 26px; }
+  p.sub { color: var(--muted); max-width: 660px; margin: 0 auto 26px; }
   a { color: var(--accent); }
   .botao { display:inline-block; padding: 16px 30px; border-radius: 12px; font-weight: 800; font-size: 1.15rem;
            text-decoration:none; color:#1a1200; background: linear-gradient(180deg, #ffd23f, #ff9a1a);
            box-shadow: 0 8px 26px rgba(255,150,30,.28); }
   .botao:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .botao[aria-disabled="true"] { background:#3a4058; color:#c8cde0; box-shadow:none; pointer-events:none; }
-  .botao.sec { display:block; width:fit-content; margin: 14px auto 0; padding: 12px 24px; font-size: 1rem; color: var(--fg);
-               background: transparent; border: 1px solid var(--borda); box-shadow: none; }
+  .outros { display:flex; flex-wrap:wrap; justify-content:center; gap: 10px; margin-top: 14px; }
+  .outros[hidden] { display: none; }
+  .botao.sec { padding: 11px 20px; font-size: .98rem; color: var(--fg); background: transparent; border: 1px solid var(--borda); box-shadow: none; }
   .botao.sec:hover { border-color: var(--accent); }
-  .botao[hidden] { display: none; }
   #estado { margin-top: 12px; color: var(--muted); font-size: .92rem; min-height: 1.5em; }
-  .tela { margin: 34px auto 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--borda); }
+  .tela { margin: 30px auto 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--borda); }
   .tela img { display:block; width:100%; height:auto; }
   .legenda { font-size: .82rem; color: var(--muted); margin-top: 8px; }
   .cartoes { display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; margin-top: 34px; text-align:left; }
@@ -46,23 +46,27 @@
 </head>
 <body>
 <main>
-  <div class="selo">Eleições 2026 · apuração em tempo real</div>
+  <div class="selo">Eleições 2026 · 2º turno em 25 de outubro</div>
   <h1>Dashboard Eleições 2026<br>com Zabbix e Grafana</h1>
-  <p class="sub">Presidente, Governador e Senador, Brasil e estados, com os dados oficiais do TSE atualizados a cada
-    minuto. Gratuito e sem cadastro.</p>
+  <p class="sub">A apuração para Presidente com os dados oficiais do TSE: Brasil, estado, cidade e, nas 27 capitais,
+    bairro e local de votação. Enquanto o 2º turno não começa, a demonstração mostra o resultado do 1º turno.
+    Gratuito e sem cadastro.</p>
 
   <a class="botao" id="abrir" href="#" aria-disabled="true">Carregando o endereço…</a>
-  <a class="botao sec" id="turno2" href="#" hidden>Painel do 2º turno: demonstração até o bairro</a>
+  <div class="outros" id="outros" hidden>
+    <a class="botao sec" id="arena" href="#">Demonstração no modo Arena</a>
+    <a class="botao sec" id="oficial" href="#">Painel do 2º turno (aguardando 25/10)</a>
+  </div>
   <div id="estado" role="status"></div>
 
-  <div class="tela"><img src="img/simulacao-apuracao-100.jpg" alt="Painel de apuração com Player 1 e Player 2, indicadores e evolução dos votos" width="800" height="955"></div>
-  <div class="legenda">Tela de um ensaio com candidatos fictícios. No dia, o painel mostra os resultados oficiais.</div>
+  <div class="tela"><img src="img/painel-2-turno-brasil.jpg" alt="Painel da apuração: placar dos dois candidatos, mapa do Brasil por estado e lista de estados com o percentual de cada um" width="1600" height="900"></div>
+  <div class="legenda">Demonstração com o resultado do 1º turno de 2026.</div>
 
   <div class="cartoes">
-    <div class="cartao"><b>Agradecimento ao idealizador</b><span>Sansão Simonton, a quem devemos a ideia do painel para a comunidade Zabbix Brasil. Telegram: <a href="https://t.me/sansaoipb">@sansaoipb</a>.</span></div>
-    <div class="cartao"><b>Em memória de Magno Montecerqueira</b><span>Publicou o painel de 2022 na galeria do Grafana. Esta edição é uma homenagem a ele.</span></div>
+    <div class="cartao"><b>Até o bairro</b><span>Nas 27 capitais, o voto por bairro e por local de votação, lido dos boletins de urna. Dá para procurar pelo CEP.</span></div>
     <div class="cartao"><b>Como foi feito</b><span><a href="https://github.com/guilasabf/dashboard-eleicoes-2026-zabbix-grafana">Arquitetura, segurança e testes no GitHub</a>. Deixe uma estrela se gostou.</span></div>
-    <div class="cartao"><b>Quem fez</b><span>Guilherme Ferreira, SRE. <a href="https://www.linkedin.com/in/guilherme-ferreira-aws-sre">LinkedIn</a> · <a href="https://github.com/guilasabf">GitHub</a></span></div>
+    <div class="cartao"><b>Agradecimento ao idealizador</b><span>Sansão Simonton, a quem devemos a ideia do painel para a comunidade Zabbix Brasil. Telegram: <a href="https://t.me/sansaoipb">@sansaoipb</a>.</span></div>
+    <div class="cartao"><b>Quem fez</b><span>Guilherme Ferreira, SRE, pela <a href="https://observei.vercel.app">Observei</a>. <a href="https://www.linkedin.com/in/guilherme-ferreira-aws-sre">LinkedIn</a> · <a href="https://github.com/guilasabf">GitHub</a></span></div>
   </div>
 
   <footer>Painel independente, sem vínculo com o TSE. Fonte dos dados: <a href="https://resultados.tse.jus.br">resultados.tse.jus.br</a>.</footer>
@@ -73,12 +77,14 @@
   fetch('link.json?t=' + Date.now(), { cache: 'no-store' })
     .then(function (r) { return r.json(); })
     .then(function (d) {
-      if (!d || !d.url) throw new Error('sem endereço');
-      botao.href = d.url;
-      botao.textContent = 'Abrir o painel ao vivo';
+      if (!d || !d.painel) throw new Error('sem endereço');
+      var base = d.painel.replace(/\/$/, '');                       // endereço de agora do painel (muda quando o servidor reinicia)
+      botao.href = base + '/t2/demo.html';
+      botao.textContent = 'Abrir o painel (demonstração com o 1º turno)';
       botao.removeAttribute('aria-disabled');
-      var segundo = document.getElementById('turno2');          // painel do 2º turno (25/10), com o 1º turno como demonstração
-      if (d.turno2) { segundo.href = d.turno2; segundo.hidden = false; }
+      document.getElementById('arena').href = base + '/t2/demo-arena.html';
+      document.getElementById('oficial').href = base + '/t2/';
+      document.getElementById('outros').hidden = false;
       if (d.aviso) estado.textContent = d.aviso;
     })
     .catch(function () {

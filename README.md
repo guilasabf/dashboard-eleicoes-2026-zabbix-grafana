@@ -6,8 +6,10 @@
 ![Cloudflare Tunnel](https://img.shields.io/badge/Cloudflare-Tunnel-F38020)
 ![LGPD by design](https://img.shields.io/badge/LGPD-by%20design-2E7D32)
 
-Painel público que acompanha a **apuração das Eleições 2026** (Presidente, Governador e Senador, Brasil e as 27 UFs)
-em tempo real, a partir dos dados abertos do TSE, com **Zabbix** na coleta e **Grafana** na visualização.
+Painel público que acompanha a **apuração das Eleições 2026** em tempo real, a partir dos dados abertos do TSE, com
+**Zabbix** na coleta e na vigilância e **Grafana** na visualização. No 1º turno cobriu Presidente, Governador e Senador,
+no Brasil e nas 27 UFs. Para o **2º turno (25 de outubro)** o painel foi refeito e desce até o município, a zona
+eleitoral e, nas 27 capitais, o bairro e o local de votação.
 
 > **Agradecimento ao idealizador, Sansão Simonton** (Telegram: [@sansaoipb](https://t.me/sansaoipb)), a quem devemos a ideia
 > do painel de apuração com Zabbix e Grafana para a comunidade Zabbix Brasil.
@@ -18,13 +20,12 @@ em tempo real, a partir dos dados abertos do TSE, com **Zabbix** na coleta e **G
 
 **Acesse o painel:** https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/
 
-**Endereço direto do painel ao vivo (temporário, muda se o servidor reiniciar):** https://distinction-overseas-near-abstracts.trycloudflare.com
+Esse endereço não muda e sempre leva ao painel de agora. Enquanto o 2º turno não começa, ele abre a demonstração com o
+resultado do 1º turno.
 
-O endereço fixo acima sempre leva ao painel atual.
+![Painel da apuração: placar dos dois candidatos, mapa do Brasil por estado e lista de estados](img/painel-2-turno-brasil.jpg)
 
-![Simulação da apuração no painel: Player 1 x Player 2, indicadores e evolução](img/simulacao-apuracao-100.jpg)
-
-<sub>Tela de um ensaio com apuração sintética e candidatos fictícios do simulado do TSE. Não são resultados reais.</sub>
+<sub>Demonstração com o resultado oficial do 1º turno de 2026.</sub>
 
 ## A ideia em três linhas
 
@@ -63,14 +64,23 @@ resumidos em [docs/arquitetura.md](docs/arquitetura.md).
 | Capacidade medida | ~1.300 espectadores simultâneos num notebook |
 | Custo | R$ 0: software livre, VMs locais e túnel gratuito |
 
-## Telas
+## O painel do 2º turno
 
-| Antes da apuração | Durante o ensaio |
+| O voto de um bairro | Locais de votação |
 | --- | --- |
-| ![Elenco de candidatos antes do início da apuração](img/pre-apuracao-candidatos.jpg) | ![Início da apuração simulada](img/simulacao-apuracao-inicio.jpg) |
+| ![Painel aberto num bairro da capital paulista, com o voto do bairro e os bairros vizinhos](img/painel-2-turno-bairro.jpg) | ![Locais de votação de São Paulo no mapa e na lista](img/painel-2-turno-locais.jpg) |
 
-O primeiro e o segundo colocados viram **Player 1** e **Player 2**, sempre definidos só pelos votos. Antes do primeiro
-voto, o painel mostra todos os candidatos em ordem de número, do mesmo tamanho.
+| O que tem | Como foi feito |
+| --- | --- |
+| Do país ao local de votação | placar por Brasil, região, estado, município e zona; nas 27 capitais, bairro e local de votação somados dos boletins de urna (102.949 seções lidas no ensaio geral, sem erro) |
+| Meu bairro pelo CEP | busca pelo CEP sem pedir a localização e sem serviço de fora |
+| Onde virou | comparação com o 2º turno de 2022, lugar por lugar |
+| Replay da noite | o placar e o mapa minuto a minuto, guardados durante a apuração |
+| Imagem para compartilhar | gerada no navegador, com os números da tela |
+| Para todo mundo | tema claro e escuro, modo acessível com tabela no lugar do mapa, tela de celular e o modo Arena |
+| Muita gente ao mesmo tempo | o mesmo painel roda dentro do Grafana e como página estática: um serviço exporta os dados a cada 30 s e o visitante não consulta o banco |
+| Vigilância | template próprio no Zabbix com 24 itens e 21 triggers (banco, serviços, internet, fonte do TSE, dado parado) e alerta por e-mail; no ensaio o alerta abriu em 93 s |
+| Testes | 52 verificações automáticas num navegador sem janela antes de cada publicação |
 
 ## Por que o código não está aqui
 
@@ -98,15 +108,15 @@ operação na noite da apuração. Parabéns, desde já, a quem topar assumir.
 - **Siga [@guilasabf](https://github.com/guilasabf) no GitHub** e **conecte-se comigo no
   [LinkedIn](https://www.linkedin.com/in/guilherme-ferreira-aws-sre)**.
 - **Compartilhe** o painel no dia da apuração.
-- **Me pague um café** pelo Pix: chave aleatória `e00b0081-8420-4004-9522-13a0e493c5e6` (o QR Code está na página
-  "Sobre" do painel).
+- **Me pague um café** pelo Pix: chave aleatória `e00b0081-8420-4004-9522-13a0e493c5e6` (o QR Code está no botão
+  "Pix" do painel).
   Se cada visitante mandar 10 centavos, eu quito minhas dívidas no Serasa kkkk
 
 ## Avisos
 
 Painel independente, sem vínculo com o TSE. Os números vêm de [resultados.tse.jus.br](https://resultados.tse.jus.br) e
-valem como divulgados pelo Tribunal. As telas de simulação usam candidatos fictícios. Zabbix e Grafana são marcas de
-seus respectivos donos.
+valem como divulgados pelo Tribunal. As telas deste repositório mostram a demonstração com o resultado do 1º turno.
+Zabbix e Grafana são marcas de seus respectivos donos.
 
 ---
 
@@ -114,7 +124,8 @@ seus respectivos donos.
 through a proxy, dependent items and low-level discovery of 833 candidates) and Grafana 13 (HTML panels fed by
 materialized views in PostgreSQL). It runs on five segmented VMs behind a Cloudflare Tunnel with no inbound ports,
 was hardened and load-tested before going public (about 1,300 concurrent viewers on a laptop), and ships with
-end-to-end checks, hourly backups and a rehearsed restore. Built in memory of Magno Montecerqueira, author of the
-2022 edition. This repository is a showcase; the full source is private.
+end-to-end checks, hourly backups and a rehearsed restore. For the runoff (October 25) the dashboard was rebuilt to
+drill down to municipality, electoral zone and, in the 27 state capitals, neighbourhood and polling place. Built in
+memory of Magno Montecerqueira, author of the 2022 edition. This repository is a showcase; the full source is private.
 
 © 2026 Guilherme Ferreira. Textos, diagramas e imagens deste repositório sob a licença GPL v3 (arquivo LICENSE).
