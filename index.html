@@ -29,6 +29,10 @@
            box-shadow: 0 8px 26px rgba(255,150,30,.28); }
   .botao:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .botao[aria-disabled="true"] { background:#3a4058; color:#c8cde0; box-shadow:none; pointer-events:none; }
+  .botao.sec { display:block; width:fit-content; margin: 14px auto 0; padding: 12px 24px; font-size: 1rem; color: var(--fg);
+               background: transparent; border: 1px solid var(--borda); box-shadow: none; }
+  .botao.sec:hover { border-color: var(--accent); }
+  .botao[hidden] { display: none; }
   #estado { margin-top: 12px; color: var(--muted); font-size: .92rem; min-height: 1.5em; }
   .tela { margin: 34px auto 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--borda); }
   .tela img { display:block; width:100%; height:auto; }
@@ -45,9 +49,10 @@
   <div class="selo">Eleições 2026 · apuração em tempo real</div>
   <h1>Dashboard Eleições 2026<br>com Zabbix e Grafana</h1>
   <p class="sub">Presidente, Governador e Senador, Brasil e estados, com os dados oficiais do TSE atualizados a cada
-    minuto. Gratuito, sem cadastro e sem anúncios.</p>
+    minuto. Gratuito e sem cadastro.</p>
 
   <a class="botao" id="abrir" href="#" aria-disabled="true">Carregando o endereço…</a>
+  <a class="botao sec" id="turno2" href="#" hidden>Painel do 2º turno: demonstração até o bairro</a>
   <div id="estado" role="status"></div>
 
   <div class="tela"><img src="img/simulacao-apuracao-100.jpg" alt="Painel de apuração com Player 1 e Player 2, indicadores e evolução dos votos" width="800" height="955"></div>
@@ -72,6 +77,8 @@
       botao.href = d.url;
       botao.textContent = 'Abrir o painel ao vivo';
       botao.removeAttribute('aria-disabled');
+      var segundo = document.getElementById('turno2');          // painel do 2º turno (25/10), com o 1º turno como demonstração
+      if (d.turno2) { segundo.href = d.turno2; segundo.hidden = false; }
       if (d.aviso) estado.textContent = d.aviso;
     })
     .catch(function () {
