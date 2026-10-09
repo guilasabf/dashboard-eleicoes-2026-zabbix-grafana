@@ -12,6 +12,7 @@
 <meta property="og:url" content="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://guilasabf.github.io/dashboard-eleicoes-2026-zabbix-grafana/">
+<link rel="icon" type="image/png" sizes="32x32" href="img/observei-32.png">
 <style>
   :root { --bg:#0b0f1a; --cartao:#121a30; --borda:rgba(120,140,255,.22); --fg:#e6e9f5; --muted:#9aa3bd;
           --ouro:#ffe066; --accent:#6ea8ff; --verde:#73bf69; }
@@ -30,9 +31,10 @@
   .botao:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .botao[aria-disabled="true"] { background:#3a4058; color:#c8cde0; box-shadow:none; pointer-events:none; }
   .outros { display:flex; flex-wrap:wrap; justify-content:center; gap: 10px; margin-top: 14px; }
-  .outros[hidden] { display: none; }
   .botao.sec { padding: 11px 20px; font-size: .98rem; color: var(--fg); background: transparent; border: 1px solid var(--borda); box-shadow: none; }
   .botao.sec:hover { border-color: var(--accent); }
+  .botao.sec[aria-disabled="true"] { background: transparent; color: var(--muted); }
+  #abrir { min-width: min(100%, 25em); }
   #estado { margin-top: 12px; color: var(--muted); font-size: .92rem; min-height: 1.5em; }
   .tela { margin: 30px auto 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--borda); }
   .tela img { display:block; width:100%; height:auto; }
@@ -58,9 +60,9 @@
     Gratuito e sem cadastro.</p>
 
   <a class="botao" id="abrir" href="#" aria-disabled="true">Carregando o endereço…</a>
-  <div class="outros" id="outros" hidden>
-    <a class="botao sec" id="arena" href="#">Demonstração no modo Arena</a>
-    <a class="botao sec" id="oficial" href="#">Painel do 2º turno (aguardando 25/10)</a>
+  <div class="outros">
+    <a class="botao sec" id="arena" href="#" aria-disabled="true">Demonstração no modo Arena</a>
+    <a class="botao sec" id="oficial" href="#" aria-disabled="true">Painel do 2º turno (aguardando 25/10)</a>
   </div>
   <div id="estado" role="status"></div>
 
@@ -68,6 +70,7 @@
   <div class="legenda">Demonstração com o resultado do 1º turno de 2026.</div>
 
   <div class="cartoes">
+    <div class="cartao"><b>O site do painel</b><span>O que o painel mostra, quem fez e como anunciar nele: <a href="https://apuracao2026-vert.vercel.app/">apuracao2026-vert.vercel.app</a>.</span></div>
     <div class="cartao"><b>Até o bairro</b><span>Nas 27 capitais, o voto por bairro e por local de votação, lido dos boletins de urna. Dá para procurar pelo CEP.</span></div>
     <div class="cartao"><b>Como foi feito</b><span><a href="https://github.com/guilasabf/dashboard-eleicoes-2026-zabbix-grafana">Arquitetura, segurança e testes no GitHub</a>. Deixe uma estrela se gostou.</span></div>
     <div class="cartao"><b>Contato</b><span>Guilherme Ferreira, SRE, pela <a href="https://observei.vercel.app">Observei</a>, consultoria de TI.<br>
@@ -99,9 +102,9 @@
       botao.href = base + '/t2/demo.html';
       botao.textContent = 'Abrir o painel (demonstração com o 1º turno)';
       botao.removeAttribute('aria-disabled');
-      document.getElementById('arena').href = base + '/t2/demo-arena.html';
-      document.getElementById('oficial').href = base + '/t2/';
-      document.getElementById('outros').hidden = false;
+      [['arena', '/t2/demo-arena.html'], ['oficial', '/t2/']].forEach(function (par) {
+        var b = document.getElementById(par[0]); b.href = base + par[1]; b.removeAttribute('aria-disabled');
+      });
       if (d.aviso) estado.textContent = d.aviso;
     })
     .catch(function () {
