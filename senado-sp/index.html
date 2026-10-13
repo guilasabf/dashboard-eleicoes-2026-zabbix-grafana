@@ -29,7 +29,7 @@
     .then(function (r) { return r.json(); })
     .then(function (d) {
       if (!d || !d.url) throw new Error('sem endereço');
-      var destino = d.url.replace(/\/$/, '') + caminho;
+      var destino = d.qr || d.url.replace(/\/$/, '') + caminho;      // "qr": destino pronto, quando o painel antigo está fora do ar
       botao.href = destino; botao.hidden = false;
       window.location.replace(destino);
     })
